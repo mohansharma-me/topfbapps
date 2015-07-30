@@ -15,14 +15,14 @@
             <a href="/" class="brand-logo"><img src="imgs/logo.png" style="height:60px;width:240px" /></a>
         </div>
         <ul class="right hide-on-med-and-down">
-            <li class="active"><a href="#apps" class="waves-effect waves-light">APPS</a></li>
-            <li><a href="#" class="waves-effect waves-light login-now">LOGIN</a></li>
-            <li><a class="waves-effect waves-light" href="#contact-us">CONTACT US</a></li>
+            <li class="active"><a href="#apps" class="nav-link waves-effect waves-light">APPS</a></li>
+            <li><a href="#" class="nav-link waves-effect waves-light login-now">LOGIN</a></li>
+            <li><a class="nav-link waves-effect waves-light" href="#contact-us">CONTACT US</a></li>
         </ul>
         <ul id="slide-out" class="side-nav">
-            <li class="active"><a href="#apps" class="waves-effect waves-light">APPS</a></li>
-            <li><a href="#" class="waves-effect waves-light login-now">LOGIN</a></li>
-            <li><a href="#contact-us" class="waves-effect waves-light">CONTACT US</a></li>
+            <li class="active"><a href="#apps" class="nav-link waves-effect waves-light">APPS</a></li>
+            <li><a href="#" class="nav-link waves-effect waves-light login-now">LOGIN</a></li>
+            <li><a href="#contact-us" class="nav-link waves-effect waves-light">CONTACT US</a></li>
         </ul>
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu" style="padding-left:10px"></i></a>
     </nav>
@@ -165,6 +165,7 @@
     <!-- SCRIPT AREA -->
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/pageLoader.js"></script>
     <script>
     $(document).ready(function() {
         $(".button-collapse").sideNav();
