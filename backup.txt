@@ -1,0 +1,56 @@
+    <main class="container z-depth-3">
+        <div class="row" style="display:none">
+            <div class="col m12">
+                <div class="z-depth-1 header-facebook-login hoverable blue darken-1 white-text">
+                    <div class="col s12 m12 l8">
+                        <div class="hide-on-large-only center">
+                            <h4 class="flow-text">Hey!! You didn't logged onto Facebook</h4>
+                        </div>
+                        <div class="hide-on-med-and-down">
+                            <h4 class="flow-text">Hey!! You didn't logged onto Facebook</h4>
+                        </div>
+                    </div>
+                    <div class="col s12 m12 l4 center" style="padding-bottom:1%">
+                        <a class="waves-effect waves-light btn hide-on-large-only white darken-3 z-depth-1 center black-text">
+                            Login
+                        </a>
+                        <a class="hoverable waves-effect waves-dark btn hide-on-med-and-down right white darken-3 z-depth-1 black-text" style="margin-top:15px">
+                            Login
+                        </a>
+                    </div>
+                    <div class="row" style="padding:0;margin:0"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <?php
+            for($i=1;$i<=2;$i++) {
+            ?>
+            <div class="col s12 m6 l4">
+                <div class="white">
+                    <a href="/app/application-title">
+                        <div class="card white darken-1 fb-app">
+                            <div class="card-image">
+                                <img class="responsive-img" src="imgs/banner.jpg">
+                            </div>
+                            <div class="start-button">
+                                <a class="btn waves-effect waves-light blue z-depth-1 hoverable">START</a>
+                            </div>
+                            <div class="card-content black-text center" style="">
+                                <span class="black-text flow-text"><b class="flow-text" style="font-size:0.89em;font-weight:bold">Application Title #<?=$i?></b></span>
+                                <p class="truncate">Application short description goes here...</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <hr class="grey lighten-3 hide-on-med-and-up" />
+            </div>
+            <?php
+            }
+            ?>
+        </div>
+        
+    </main>
+
+-------------------------------------------------
