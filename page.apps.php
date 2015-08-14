@@ -4,8 +4,8 @@
             <div class="row grey lighten-3" style="margin-bottom:0">
                 <div class="col s12 m8 l8">
                     <h1 class="flow-text blue-grey-text darken-4" style="padding:0px;margin:25px 0px">
-                        <div class="center hide-on-med-and-up">Hey!! You didn't logged onto Facebook.</div>
-                        <div class="hide-on-small-only">Hey!! You didn't logged onto Facebook.</div>
+                        <div class="center hide-on-med-and-up fb-login-status">Hey!! You didn't logged onto Facebook.</div>
+                        <div class="hide-on-small-only fb-login-status">Hey!! You didn't logged onto Facebook.</div>
                     </h1>
                 </div>
                 <div class="col s12 m4 l4">
@@ -62,9 +62,26 @@
 		<div class="grid">
 			<div class="row">
 				<?php
-				
+				require_once "inc.database.php";
+				$appList=apps();
+				foreach($appList as $app) {
+					$appImgs=explode(",",$app["appShowcaseImgs"]);
+					?>
+					<div class="col s12 m6 l4">
+						<div class="card grey lighten-3">
+							<div class="card-image"><a href="/<?=$app["appSlug"]?>" class="black-text"><img title="<?=$app["appShortDesc"]?>" alt="<?=$app["appShortDesc"]?>" src="<?=$appImgs[0]?>"/></a></div>
+							<div class="start-button">
+								<a class="btn waves-effect waves-light grey-blue darken-3">START</a>
+							</div>
+							<div class="card-content">
+								<a href="/<?=$app["appSlug"]?>" class="black-text"><div class="flow-text"><b><?=$app["appTitle"]?></b></div></a>
+							</div>
+						</div>
+					</div>
+					<?php
+				}
 				?>
-				<div class="col s12 m6 l4">
+				<!--<div class="col s12 m6 l4">
 					<div class="card grey lighten-3">
 						<div class="card-image"><a href="" class="black-text"><img src="/imgs/banner.jpg"/></a></div>
 						<div class="start-button">
@@ -74,7 +91,7 @@
 							<a href="" class="black-text"><div class="flow-text"><b>Find your favorite style within a second!!</b></div></a>
 						</div>
 					</div>
-				</div>
+				</div>-->
 			</div>
 		</div>
 	</div>

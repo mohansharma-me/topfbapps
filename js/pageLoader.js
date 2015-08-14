@@ -2,7 +2,7 @@ $.pageClick=function(e) {
 	var loader=$("<div class='page-loader'></div>");
 	var anchor=$(this);
 	var pageName=$(anchor).attr("href");
-	var page="http://topfbapps.dev/"+pageName;
+	var page=pageName;
 	$(".page-loader").show();
 	if($(".button-collapse").is(":visible")) {
 		$(".button-collapse").click();

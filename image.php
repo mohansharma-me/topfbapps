@@ -17,6 +17,7 @@ $obj["x"]=40;
 $obj["y"]=40;
 $obj["type"]="text";
 $obj["text"]="Welcome";
+$obj["font"]="./font/app/default.ttf";
 $obj["foreground"]="FF000000";
 $canvasProp["objects"][]=$obj;
 
