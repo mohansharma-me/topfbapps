@@ -16,11 +16,25 @@ $obj["foreground"]="FFFFFFFF";
 
 $canvasProp["objects"][]=$obj;
 
+$obj["type"]="image";
+$obj["image"]="./imgs/banner.jpg";
+$obj["x"]=$obj["y"]=0;
+$obj["w"]=640;
+$obj["h"]=480;
+$canvasProp["objects"][]=$obj;
+
 $obj["x"]=40;
 $obj["y"]=40;
 $obj["type"]="text";
 $obj["text"]="Welcome";
-$obj["foreground"]="FF00FF00";
+$obj["foreground"]="FF000000";
+$canvasProp["objects"][]=$obj;
+
+$obj["y"]=80;
+$obj["type"]="image";
+$obj["image"]="./imgs/test.png";
+$obj["w"]=120;
+$obj["h"]=120;
 $canvasProp["objects"][]=$obj;
 
 file_put_contents("sample.json",json_encode($canvasProp));
@@ -46,6 +60,18 @@ function getImageData($app,$data=null) {
 	
 	foreach($app["objects"] as $object) {
 		switch($object["type"]) {
+			case "image":
+				list($imgWidth,$imgHeight)=getimagesize($object["image"]);
+				$srcImage=imagecreatefromstring(file_get_contents($object["image"]));
+				$sX=isset($object["source_x"])?$object["source_x"]:0;
+				$sY=isset($object["source_y"])?$object["source_y"]:0;
+				$sW=isset($object["source_w"])?$object["source_w"]:$imgWidth;
+				$sH=isset($object["source_h"])?$object["source_h"]:$imgHeight;
+				$dW=isset($object["w"])?$object["w"]:$imgWidth;
+				$dH=isset($object["h"])?$object["h"]:$imgHeight;
+				imagecopyresampled($img,$srcImage,$object["x"],$object["y"],$sX,$sY,$dW,$dH,$sW,$sH);
+			break;
+			
 			case "box":
 				$borderWidth=0;
 				if(isset($object["foreground"])) {
@@ -81,19 +107,3 @@ function getColorId($image,$str) {
 	$b=substr($str,6,2);
 	return imagecolorallocatealpha($image, hexdec($r), hexdec($g), hexdec($b), $a);
 }
-
-function calculateTextBox($fontSize,$fontAngle,$fontFile,$text) { 
-    $rect = imagettfbbox($fontSize,$fontAngle,$fontFile,$text); 
-    $minX = min(array($rect[0],$rect[2],$rect[4],$rect[6])); 
-    $maxX = max(array($rect[0],$rect[2],$rect[4],$rect[6])); 
-    $minY = min(array($rect[1],$rect[3],$rect[5],$rect[7])); 
-    $maxY = max(array($rect[1],$rect[3],$rect[5],$rect[7])); 
-    
-    return array( 
-     "left"   => abs($minX) - 1, 
-     "top"    => abs($minY) - 1, 
-     "width"  => $maxX - $minX, 
-     "height" => $maxY - $minY, 
-     "box"    => $rect 
-    ); 
-} 
