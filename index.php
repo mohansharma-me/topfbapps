@@ -30,7 +30,7 @@ start_html();
 		if(count(slug_array())>=2) {
 			?>
 			<meta property="og:title" content="<?=$pageData["app"]["appMetaTitle"]?>" />
-			<meta property="og:image" content="http://topfbapps.dev/gen-images/<?=$pageData["app"]["appSlug"]?>-<?=slug(1)?>.png"/>
+			<meta property="og:image" content="http://topfbapps.com/gen-images/<?=$pageData["app"]["appSlug"]?>-<?=slug(1)?>.png"/>
 			<meta property="og:description" content="<?=$pageData["app"]["appMetaDesc"]?>" />
 			<?php
 		}
