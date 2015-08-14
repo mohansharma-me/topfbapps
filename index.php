@@ -3,7 +3,7 @@ session_start();
 require_once "inc.theme.php";
 
 $defaultTitle="Apps";
-$defaultPage="home";
+$defaultPage="apps";
 $pageKind=page_init($defaultTitle,$defaultPage);
 
 if($pageKind==APP_PAGE) {
@@ -12,7 +12,7 @@ if($pageKind==APP_PAGE) {
 
 // THEME INIT
 start_html();
-	start_head($defaultTitle." - TopFBApps");		
+	start_head($defaultTitle." - TopFBApps");
 	end_head();
 	start_body();
 		page_nav();

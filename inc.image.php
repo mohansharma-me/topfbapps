@@ -1,45 +1,4 @@
 <?php
-$canvasProp=array();
-$canvasProp["height"]=480;
-$canvasProp["width"]=640;
-$canvasProp["background"]="88000000";
-$canvasProp["objects"]=array();
-
-$obj=array();
-$obj["type"]="image";
-$obj["image"]="./imgs/banner.jpg";
-$obj["x"]=$obj["y"]=0;
-$obj["w"]=640;
-$obj["h"]=480;
-$canvasProp["objects"][]=$obj;
-
-$obj["x"]=40;
-$obj["y"]=40;
-$obj["type"]="text";
-$obj["text"]="Welcome";
-$obj["foreground"]="FF000000";
-$canvasProp["objects"][]=$obj;
-
-$obj["y"]=80;
-$obj["type"]="image";
-$obj["image"]="./imgs/test.png";
-$obj["w"]=120;
-$obj["h"]=120;
-$canvasProp["objects"][]=$obj;
-
-file_put_contents("sample.json",json_encode($canvasProp));
-
-$json=json_decode(file_get_contents("sample.json"), true);
-
-if(isset($_GET["debug"])) {
-	echo "<pre>";
-	print_r($json);
-	echo "</pre>";
-} else {
-	header("Content-Type: image/png");
-	print getImageData($json);
-}
-
 function getImageData($app,$data=null) {
 	$img=imagecreatetruecolor($app["width"],$app["height"]);
 	imagesavealpha($img,true);

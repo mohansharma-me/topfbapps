@@ -17,7 +17,7 @@ function slug($number) {
 
 function slug_array() {
 	$keys=filter_input(INPUT_GET,"__key");
-	return explode("/", isset($keys)?$keys:"home");
+	return explode("/", isset($keys)?$keys:"apps");
 }
 
 function toslug($text) {
@@ -37,7 +37,7 @@ function toslug($text) {
 
 function page_init(&$title,&$page) {
 	switch(slug(0)) {
-		case "home": case "contact-us":
+		case "apps": case "contact-us":
 			// title generation logic goes here...
 			$page=slug(0);
 			return BASIC_PAGE;

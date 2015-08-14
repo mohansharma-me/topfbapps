@@ -1,0 +1,2 @@
+table=app
+fields=appId, appSlug, appTitle, appShortDesc, appHTMLDesc, appMetaDesc, appMetaKeyword, appJSON, appShowcaseImages
