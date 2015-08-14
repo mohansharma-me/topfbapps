@@ -15,7 +15,7 @@ function apps($appSlug=null) {
 }
 
 function connectMySQL() {
-	mysql_connect("localhost","root","");
+	mysql_connect("localhost","topfbuser","psych0101");
 	mysql_select_db("topfbapps");
 }
 
