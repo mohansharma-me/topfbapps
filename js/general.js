@@ -1,21 +1,26 @@
 $.loginButton=function() {
 	FB.login(function(response) {
+		console.log(response);
 		if (response.status === 'connected') {
-		  userLogged();
+			statusChangeCallback(response);
 		} else if (response.status === 'not_authorized') {
 		  // The person is logged into Facebook, but not your app.
+		  $.fbLogged=false;
 		  $(".fb-login-status").html("Hey!! You didn't authorized us <b>:(</b>");
 		} else {
+			$.fbLogged=false;
 		  // The person is not logged into Facebook, so we're not sure if
 		  // they are logged into this app or not.
 		  $(".fb-login-status").html("Hey!! You didn't logged onto Facebook.!");	  
 		}
-	});
+	},{scope: 'email,public_profile'});
+	return false;
 };
 
 $.logoutButton=function() {
 	FB.logout(function(response) {
 		userLoggedOut();
+		$.fbLogged=false;
 	});
 }
 
@@ -32,14 +37,16 @@ function statusChangeCallback(response) {
 	// for FB.getLoginStatus();
 	if (response.status === 'connected') {
 	  // Logged into your app and Facebook.
-	  userLogged();
+	  userLogged(response);
 	} else if (response.status === 'not_authorized') {
 	  // The person is logged into Facebook, but not your app.
 	  $(".fb-login-status").html("Hey!! You didn't logged onto Facebook.!");
+	  userLoggedOut();
 	} else {
 	  // The person is not logged into Facebook, so we're not sure if
 	  // they are logged into this app or not.
 	  $(".fb-login-status").html("Hey!! You didn't logged onto Facebook.!");	  
+	  userLoggedOut();
 	}
 }
 
@@ -74,26 +81,44 @@ function checkLoginState() {
 	});
 };
   
-function userLogged() {
+function userLogged(res) {
 	console.log('Welcome!  Fetching your information.... ');
 	FB.api('/me', function(response) {
 		console.log('Successful login for: ' + response.name);
-		$(".fb-unauthed").hide();
-		$(".fb-authed").removeClass("hide");
+		$(".unauth-nav").hide();
+		$(".auth-nav").show();
 		$(".fb-name").html(response.name);
-		$(".fb-profile-pic").attr("src","http://graph.facebook.com/"+response.id+"/picture?width=128&height=128");
+		$(".fb-profile-pic").attr("src","http://graph.facebook.com/"+res.authResponse.userID+"/picture?width=100&height=100");
 	});
+	$.appInit(res);
 }
 
 function userLoggedOut() {
-	$(".fb-unauthed").show();
-	$(".fb-authed").addClass("hide");
+	$(".unauth-nav").show();
+	$(".auth-nav").hide();
+	$(".app-output").hide();
+	$(".staticDisplay").show();
 }
-  
+
+$.appInit=function(res) {
+	if(appPage) {
+		if($(".staticDisplay").is(":visible") || $(".app-output").is(":visible")) {
+			$(".staticDisplay").hide();
+			$(".app-output").show();
+			$(".app-output .output-loader").hide();
+			$(".app-output .output").show();
+			$(".app-output .output .output-img").attr("src","/image.php?app="+appSlug+"&token="+res.authResponse.accessToken);
+			$.shareURI="http://topfbapps.com/"+appSlug+"/"+res.authResponse.userID;
+		}
+	}
+};
+
+$.fbLogged=false;
+$.fbUserID=0;
 $.docReady=function() {
 	$(".button-collapse").sideNav();
 	if($(".hide-on-med-and-up").is(":visible")) {
 		$(".fb-app").addClass("z-depth-0");
 	}
-	$(".login-now").click($.loginButton);
+	$(".login-now").click($.loginButton);	
 };

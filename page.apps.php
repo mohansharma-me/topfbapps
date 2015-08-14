@@ -32,14 +32,8 @@
                 </div>
 
                 <div class="col s12 m3 l7 flow-text">
-                    <div class="center hide-on-med-and-up">
-                        <div class="fb-name"></div>
-							<br/><br/>
-                    </div>
-                    <div class="hide-on-small-only" style="padding-top:20px">
-                        <div class="fb-name"></div>
-							<br/>
-                    </div>
+                    <div class="center hide-on-med-and-up fb-name"></div>
+                    <div class="hide-on-small-only fb-name" style="padding-top:20px"></div>
                 </div>
 
                 <div class="col s12 m6 l3">

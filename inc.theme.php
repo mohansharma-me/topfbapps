@@ -6,7 +6,13 @@ define("APP_PAGE",0x000002);
 // APPLICATION FUNCTIONS
 
 function app_init(&$title) {
-	$title=slug(0);
+	require_once "inc.database.php";
+	$app=apps(slug(0));
+	if(count($app)==1) {
+		$app=$app[0];
+		$title=$app["appTitle"];
+	}
+	return $app;
 }
 
 // BASIC SLUG FUNCTIONS
@@ -17,7 +23,7 @@ function slug($number) {
 
 function slug_array() {
 	$keys=filter_input(INPUT_GET,"__key");
-	return explode("/", isset($keys)?$keys:"apps");
+	return explode("/", isset($keys)?$keys:"sample-app");
 }
 
 function toslug($text) {
@@ -79,11 +85,16 @@ function page_nav() {
 	?>
 	<nav class="color blue darken-3" style="position:fixed;z-index:99999">
 		<div style="padding-left:20px">
-			<a href="/" class="brand-logo"><img src="/imgs/logo.png" style="height:60px;width:240px" /></a>
+			<a href="/" class="brand-logo">
+				<div class="hide-on-med-and-up" style="margin-top:5px"></div>
+				<img src="/imgs/logo.png" class="responsive-img" style="margin-top:4%;width:240px;" />
+			</a>
 		</div>
 		<ul class="right hide-on-med-and-down">
+			<li class="active auth-nav" style="display:none"><a href="" style="padding-top:0;padding-bottom:0;"><img src="/imgs/default.png" class="responsive-img fb-profile-pic circle" style="vertical-align:middle;height:50px;width:50px;margin-top:-8px" />&nbsp;&nbsp;<span class="flow-text white-text fb-name" style="font-size:1.3em"></span></a></li>
+			<li class="auth-nav" style="display:none"><a onClick="$.logoutButton()" href="">LOGOUT</a></li>
+			<li class="unauth-nav"><a href="" class="waves-effect waves-light login-now">LOGIN</a></li>
 			<li class="active"><a href="" class="nav-link waves-effect waves-light">APPS</a></li>
-			<li><a href="login" class="waves-effect waves-light login-now">LOGIN</a></li>
 			<li><a class="nav-link waves-effect waves-light" href="contact-us">CONTACT US</a></li>
 		</ul>
 		<ul id="slide-out" class="side-nav">
@@ -127,7 +138,7 @@ function end_content_area($includeFooter=true) {
 	echo "</div>";
 }
 
-function include_page($pageName) {
+function include_page($pageName,$pageData) {
     $pageFile="page.$pageName.php";
 	if(is_file($pageFile) && file_exists($pageFile)) require_once $pageFile;
 	// custom invalid slug error page in ELSE condition

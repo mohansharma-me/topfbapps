@@ -1,7 +1,11 @@
 <?php
-function apps() {
+function apps($appSlug=null) {
 	$appArray=array();
-	$resDB=exeSQL("select * from apps limit 9");
+	$where='where 1=1';
+	if(isset($appSlug)) {
+		$where.=' and appSlug LIKE "'.$appSlug.'"';
+	}
+	$resDB=exeSQL("select * from apps $where limit 9");
 	if(mysql_affected_rows()>0) {
 		while($app=mysql_fetch_assoc($resDB)) {
 			$appArray[]=$app;
