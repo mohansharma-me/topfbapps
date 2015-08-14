@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col s12 m12">
+    <div class="col s12 m12 fb-unauthed">
         <div class="grey lighten-3 head-row">
             <div class="row grey lighten-3" style="margin-bottom:0">
                 <div class="col s12 m8 l8">
@@ -22,31 +22,33 @@
         </div>
     </div>
 
-    <div class="col s12 m12 hide">
+    <div class="col s12 m12 fb-authed hide">
         <div class="grey lighten-3 head-row">
             <div class="row grey lighten-3" style="margin-bottom:0">
                 <div class="col s12 m3 l2">
                     <div class="center">
-                        <img src="/imgs/test.png" class="circle fb-profile-pic" />
+                        <img src="/imgs/default.png" class="circle fb-profile-pic" />
                     </div>
                 </div>
 
                 <div class="col s12 m3 l7 flow-text">
                     <div class="center hide-on-med-and-up">
-                        Mohan Sharma<br/><br/>
+                        <div class="fb-name"></div>
+							<br/><br/>
                     </div>
                     <div class="hide-on-small-only" style="padding-top:20px">
-                        Mohan Sharma<br/>
+                        <div class="fb-name"></div>
+							<br/>
                     </div>
                 </div>
 
                 <div class="col s12 m6 l3">
                     <div  style="margin:20px;">
                         <div class="right-align hide-on-small-only">
-                            <a class="flow-text waves-effect waves-light btn blue darken-2 z-depth-1 hoverable">LOGOUT</a>
+                            <a class="flow-text waves-effect waves-light btn blue darken-2 z-depth-1 hoverable logout-button" onClick="$.logoutButton();">LOGOUT</a>
                         </div>
                         <div class="center hide-on-med-and-up">
-                            <a class="flow-text waves-effect waves-light btn blue darken-2 z-depth-1 hoverable">LOGOUT</a>
+                            <a class="flow-text waves-effect waves-light btn blue darken-2 z-depth-1 hoverable logout-button" onClick="$.logoutButton();">LOGOUT</a>
                         </div>
                     </div>
                 </div>
