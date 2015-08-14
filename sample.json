@@ -1,0 +1,1 @@
+{"height":480,"width":640,"background":"88000000","objects":[{"x":10,"y":0,"h":32,"w":620,"type":"box","background":"FF0000FF","foreground":"FFFFFFFF"},{"x":40,"y":40,"h":32,"w":620,"type":"text","background":"FF0000FF","foreground":"FF00FF00","text":"Welcome"}]}
