@@ -23,7 +23,7 @@ function slug($number) {
 
 function slug_array() {
 	$keys=filter_input(INPUT_GET,"__key");
-	return explode("/", isset($keys)?$keys:"sample-app");
+	return explode("/", isset($keys)?$keys:"proud-indian");
 }
 
 function toslug($text) {

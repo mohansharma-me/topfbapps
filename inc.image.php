@@ -19,7 +19,11 @@ function getImageData($app,$apiData,$saveToDisk=null) {
 					$h_tmp=tmpfile();
 					fwrite($h_tmp,file_get_contents("http://graph.facebook.com/".$apiData["id"]."/picture?width=$scaleW&height=$scaleW"));
 					$object["image"]=stream_get_meta_data($h_tmp)["uri"];
+				} else {
+					$multiImgs=explode("|",$output["image"]);
+					$output["image"]=$multiImgs[rand(0,count($multiImgs)-1)];
 				}
+				
 				list($imgWidth,$imgHeight)=getimagesize($object["image"]);
 				$sourceImageString=file_get_contents($object["image"]);
 				$srcImage=imagecreatefromstring($sourceImageString);

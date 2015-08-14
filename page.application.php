@@ -44,7 +44,7 @@ var appShareURI="";
 						<div class="hide-on-small-only right-align">
 							<ul style="margin:0;margin-top:9px">
 								<li style="display:inline-block"><a href="javascript:void" onClick='window.open("https://twitter.com/intent/tweet?text=Top Facebook Applications&tw_p=tweetbutton&url=http://topfbapps.com&via=topfbapps.com","_blank","width=400, height=400, resizable=false")'><img src="/imgs/social/twitter.png" class="" style="height:48px;width:48px" /></a></li>
-								<li style="display:inline-block"><a href="javascript:void" onClick='window.open("https://www.facebook.com/sharer/sharer.php?u=http://topfbapps.com/&display=popup&ref=plugin&src=share_button","_blank","resizable=false")'><img src="/imgs/social/facebook.png" class="" style="height:48px;width:48px" /></a></li>
+								<li style="display:inline-block"><a href="javascript:void" onClick='window.open("https://www.facebook.com/sharer/sharer.php?u=http://topfbapps.com/&display=popup&ref=plugin&src=share_button","_blank","width=400, height=400, resizable=false")'><img src="/imgs/social/facebook.png" class="" style="height:48px;width:48px" /></a></li>
 							</ul>
 						</div>
 					</div>
@@ -94,7 +94,7 @@ var appShareURI="";
 								?>
 								<div class="left-algn">
 									<ul>
-										<li><a href="javascript:void" onClick='window.open("https://www.facebook.com/sharer/sharer.php?u="+$.shareURI+"&display=popup&ref=plugin&src=share_button","_blank","resizable=false")'><img src="/imgs/social/facebook1.png" /></a></li>
+										<li><a href="javascript:void" onClick='window.open("https://www.facebook.com/sharer/sharer.php?u="+$.shareURI+"&display=popup&ref=plugin&src=share_button","_blank","width=400, height=400, resizable=false")'><img src="/imgs/social/facebook1.png" /></a></li>
 										<li><a href="javascript:void" onClick='window.open("https://twitter.com/intent/tweet?hashtags=ProudIndian&text=I am a Proud Indian, Are you?&tw_p=tweetbutton&url="+$.shareURI+"&via=topfbapps.com","_blank","width=400, height=400, resizable=false")'><img src="/imgs/social/twitter1.png" /></a></li>
 										<li><a href="javascript:void" onClick='window.open("https://plus.google.com/share?url="+$.shareURI,"_blank","width=500, height=400, resizable=false")'><img src="/imgs/social/googleplus.png" /></a></li>
 									</ul>
