@@ -2,16 +2,12 @@
 if(!isset($pageData["app"])) {
 	echo "Invalid AppID";
 } else {
+	$slugCount=count(slug_array());
 	$app=$pageData["app"];
-	$isPreview=count(slug_array())>=2;
+	$isPreview=$slugCount>=2;
 	if($isPreview)
-	$previewImg="/gen-images/".slug(0)."-".slug(1).".png";
+		$previewImg="/gen-images/".slug(0)."-".slug(1).".png";
 ?>
-<script>
-var appPage=true;
-var appSlug="<?=slug(0)?>";
-var appShareURI="";
-</script>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -60,95 +56,86 @@ var appShareURI="";
 	</div>
 	
 	<div class="col s12 m12">
-		<div style="padding:0px 15px;margin:10px" class="center">
-			<div class="staticDisplay" style="display:none">
-				<div class="col s12 m12">
-					<div class="col s12 m7">
-						<?php
-						$images=explode(",",$app["appShowcaseImgs"]);
-						?>
-						<img src="<?=$images[1]?>" class="output-img responsive-img" />
-					</div>
-					<div class="col s12 m5">
-						<h5>You can create your own "Proud Indian" photo</h5>
-						<br/><br/>
-						<a class="login-now" href="javascript:void"><img src="/imgs/social/facebook_login.png" /></a>
-					</div>
-				</div>
-			</div>
-			<div class="app-output<?=$isPreview?"a":""?>" style="">
-				<div class="output" style="display:none<?=$isPreview?"a":""?>">
-					<div class="col s12 m12">
-						<div class="col s12 m8">
-							<img src="<?=$isPreview?$previewImg:""?>" class="output-img responsive-img" />
-						</div>
-						<div class="col s12 m4">
-							<?php
-							if($isPreview) {
-								?>
-								<h5>You can create your own "Proud Indian" photo</h5>
-								<br/><br/>
-								<a class="login-now" href="javascript:void"><img src="/imgs/social/facebook_login.png" /></a>
-								<?php
-							} else {
-								?>
-								<div class="left-algn">
-									<ul>
-										<li><a href="javascript:void" onClick='window.open("https://www.facebook.com/sharer/sharer.php?u="+$.shareURI+"&display=popup&ref=plugin&src=share_button","_blank","width=400, height=400, resizable=false")'><img src="/imgs/social/facebook1.png" /></a></li>
-										<li><a href="javascript:void" onClick='window.open("https://twitter.com/intent/tweet?hashtags=ProudIndian&text=I am a Proud Indian, Are you?&tw_p=tweetbutton&url="+$.shareURI+"&via=topfbapps.com","_blank","width=400, height=400, resizable=false")'><img src="/imgs/social/twitter1.png" /></a></li>
-										<li><a href="javascript:void" onClick='window.open("https://plus.google.com/share?url="+$.shareURI,"_blank","width=500, height=400, resizable=false")'><img src="/imgs/social/googleplus.png" /></a></li>
-									</ul>
-								</div>
-								<?php
-							}
-							?>
-						</div>
-					</div>
-				</div>
-				<div class="preloader-wrapper big active output-loader <?=$isPreview?"hide":""?>">
-				<div class="spinner-layer spinner-blue-only">
-				<div class="circle-clipper left">
-				<div class="circle"></div>
-				</div><div class="gap-patch">
-				<div class="circle"></div>
-				</div><div class="circle-clipper right">
-				<div class="circle"></div>
-				</div>
-				</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col s12 m12">
-		<div class="center">
+		<div style="padding:0px;margin:10px">
 		<?php
-		//$images=explode(",",$app["appShowcaseImgs"]);
-		unset($images[0]);
-		unset($images[1]);
-		foreach($images as $img) {
+		if($isPreview) {
 			?>
-			<div class="col s12 m3">
-				<div class="card">
-					<div class="card-image">
-						<img src="<?=$img?>" class="responsive-img" />
-					</div>
-				</div>
+			<div class="col s12 m8">
+				<img class="responsive-img" style="width:100%" src="/gen-images/<?=slug(0)?>-<?=slug(1)?>.png" />
+			</div>
+			<div class="col s12 m4">
+				<?php
+				if($_SESSION["fbAlive"] && $slugCount==2 && $_SESSION["fbUser"]["id"]==slug(1)) {
+				?>
+				<center>
+					<ul>
+						<li><a href="http://www.facebook.com/sharer/sharer.php?caption=<?=$app["appShareMessage"]?>&u=http://topfbapps.com/<?=slug(0)?>/<?=slug(1)?>" class="login-now"><img src="/imgs/social/facebook1.png" /></a></li>
+						<li><a href="https://twitter.com/intent/tweet?text=<?=$app["appShareMessage"]?>&url=http://topfbapps.com/<?=slug(0)?>/<?=slug(1)?>" class="login-now"><img src="/imgs/social/twitter1.png" /></a></li>
+					</ul>
+				</center>
+				<?php
+				} else {
+					if($_SESSION["fbAlive"]) {
+						?>
+						<center>
+							<h3 class="flow-text"><?=$app["appIncentive"]?></h3>
+							<a href="<?=$_SESSION["fbLoginURI"]?>" class="btn waves-effect waves-light green login-now">CREATE</a>
+						</center>
+						<?php
+					} else {
+						?>
+						<center>
+							<h3 class="flow-text"><?=$app["appLoginIncentive"]?></h3>
+							<a href="<?=$_SESSION["fbLoginURI"]?>" class="login-now"><img src="/imgs/social/facebook_login.png" /></a>
+						</center>
+						<?php
+					}
+				}
+				?>
 			</div>
 			<?php
+		} else {
+			if(false) {
+			} else {
+		?>
+			<div class="col s12 m8">
+				<img class="responsive-img" style="width:100%" src="/imgs/demo.png" />
+			</div>
+			<div class="col s12 m4">
+				<?php
+				if($_SESSION["fbAlive"]) {
+					?>
+					<center>
+						<h3 class="flow-text"><?=$app["appIncentive"]?></h3>
+						<a href="<?=$_SESSION["fbLoginURI"]?>" class="btn waves-effect waves-light green login-now">CREATE</a>
+					</center>
+					<?php
+				} else {
+					?>
+					<center>
+						<h3 class="flow-text"><?=$app["appLoginIncentive"]?></h3>
+						<a href="<?=$_SESSION["fbLoginURI"]?>" class="login-now"><img src="/imgs/social/facebook_login.png" /></a>
+					</center>
+					<?php
+				}
+				?>
+				<!--<center>
+					<h3 class="flow-text"><?=$app["appIncentive"]?></h3>
+					<a href="<?=$_SESSION["fbLoginURI"]?>" class="login-now"><img src="/imgs/social/facebook_login.png" /></a>
+				</center>-->
+			</div>
+		<?php
+			}
 		}
 		?>
 		</div>
 	</div>
 </div>
-<div class="row" style="margin-top:20px">
-	<div class="col s12 m6">
+<div class="row">
+	<div class="col s12 m7">
 		<div style="padding:10px 15px">
-			<div class="fb-comments" style="width:100px" data-href="http://topfbapps.com/<?=slug(0)?>" data-numposts="5"></div>
+			<div class="fb-comments" data-href="http://topfbapps.com/<?=slug(0)?>" data-numposts="5"></div>
 		</div>
-	</div>
-	<div class="col s12 m6">
 	</div>
 </div>
 <?php

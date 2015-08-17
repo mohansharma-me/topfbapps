@@ -69,12 +69,32 @@ function start_head($titleOfPage) {
 }
 
 function end_head() {
-	echo "<script type='text/javascript'>var pageInited=false;</script>";
+	?>
+	<!-- Facebook Pixel Code -->
+	<script>
+	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+	n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+	n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+	t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+	document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+	fbq('init', '1642197346025300');
+	fbq('track', 'PageView');
+	</script>
+	<noscript><img height="1" width="1" style="display:none"
+	src="https://www.facebook.com/tr?id=1642197346025300&ev=PageView&noscript=1"
+	/></noscript>
+	<!-- End Facebook Pixel Code -->
+	<?php
 	echo "</head>";
 }
 
 function start_body() {
 	echo "<body>";
+}
+
+function getPageURL() {
+	return "http://".$_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI];
 }
 
 function end_body() {
@@ -91,16 +111,23 @@ function page_nav() {
 			</a>
 		</div>
 		<ul class="right hide-on-med-and-down">
-			<li class="active auth-nav" style="display:none"><a href="" style="padding-top:0;padding-bottom:0;"><img src="/imgs/default.png" class="responsive-img fb-profile-pic circle" style="vertical-align:middle;height:50px;width:50px;margin-top:-8px" />&nbsp;&nbsp;<span class="flow-text white-text fb-name" style="font-size:1.3em"></span></a></li>
-			<li class="auth-nav" style="display:none"><a onClick="$.logoutButton()" href="">LOGOUT</a></li>
-			<li class="unauth-nav"><a href="" class="waves-effect waves-light login-now">LOGIN</a></li>
-			<li class="active"><a href="" class="nav-link waves-effect waves-light">APPS</a></li>
-			<li><a class="nav-link waves-effect waves-light" href="contact-us">CONTACT US</a></li>
+			<?php
+			if($_SESSION["fbAlive"]) {
+			?>
+			<li class="active"><a href="javascript:void" style="padding-top:0;padding-bottom:0;"><img src="http://graph.facebook.com/<?=$_SESSION["fbUser"]["id"]?>/picture?width=100&height=100" class="responsive-img fb-profile-pic circle" style="vertical-align:middle;height:50px;width:50px;margin-top:-8px" />&nbsp;&nbsp;<span class="flow-text white-text fb-name" style="font-size:1.3em"><?=$_SESSION["fbUser"]["first_name"]?></span></a></li>
+			<li><a href="?fbLogout=yes&redirect=<?=getPageURL()?>">LOGOUT</a></li>
+			<?php
+			} else {
+			?>
+			<li><a href="<?=$_SESSION["fbLoginURI"]?>" class="waves-effect waves-light login-now">LOGIN</a></li>
+			<?php
+			}
+			?>
+			<li class="active"><a href="/" class="nav-link waves-effect waves-light">APPS</a></li>
 		</ul>
 		<ul id="slide-out" class="side-nav">
-			<li class="active"><a href="#apps" class="nav-link waves-effect waves-light">APPS</a></li>
-			<li><a href="#" class="nav-link waves-effect waves-light login-now">LOGIN</a></li>
-			<li><a href="#contact-us" class="nav-link waves-effect waves-light">CONTACT US</a></li>
+			<li><a href="<?=$_SESSION["fbLoginURI"]?>" class="nav-link waves-effect waves-light login-now">LOGIN</a></li>
+			<li class="active"><a href="/" class="nav-link waves-effect waves-light">APPS</a></li>
 		</ul>
 		<a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu" style="padding-left:10px"></i></a>
 	</nav>
@@ -109,7 +136,7 @@ function page_nav() {
 
 function start_content_area($showHeaderImage=true) {
 	echo "<div class='content-area'>";
-	require_once "./theme/page-loader.php"; // PAGE LOADER (Only Design)
+	//require_once "./theme/page-loader.php"; // PAGE LOADER (Only Design)
 	if($showHeaderImage) {
 		echo '<div class="header-image"></div>';
 	}
@@ -147,18 +174,16 @@ function include_page($pageName,$pageData) {
 function include_scripts() {
 	?>
 	<script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="/js/materialize.min.js"></script>
-	<script type="text/javascript" src="/js/pageLoader.js"></script>
+	<script type="text/javascript" src="/js/materialize.min.js"></script>	
 	<script type="text/javascript" src="/js/general.js"></script>
 	<script>$(document).ready($.docReady);</script>
-	<script>
-	(function(d, s, id) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) return;
-		js = d.createElement(s); js.id = id;
-		js.src = "//connect.facebook.net/en_US/sdk.js";
-		fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
+	<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=1532066743742972";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 	<?php
 }

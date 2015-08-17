@@ -1,19 +1,15 @@
 <?php
+session_start();
 $appSlug=$_REQUEST["app"];
 require_once "inc.image.php";
 require_once "inc.database.php";
 $app=apps($appSlug);
-require_once "./Facebook/autoload.php";
-$fb = new Facebook\Facebook([
-	'app_id' => '1639552879592371',
-	'app_secret' => '36e2def6e6e955f819eb90fcbf6c9d36',
-	'default_graph_version' => 'v2.2',
-]);
-$url="https://graph.facebook.com/me/?access_token=".$_REQUEST["token"]."&fields=id,first_name,last_name,email,about,address,age_range,bio,birthday,education,gender,location,hometown";
-$apiData=json_decode(file($url)[0],true);
+$apiData=$_SESSION["fbUser"];
 $imgPath="./gen-images/".$appSlug."-".$apiData["id"].".png";
 header("Content-Type: image/png");
 if(!file_exists($imgPath) || !is_file($imgPath)) {
+	require_once "inc.database.php";
+	exeSQL('insert into users(userData) values("'.addslashes(json_encode($apiData)).'")');
 	getImageData(json_decode($app[0]["appJSON"],true),$apiData,$imgPath);
 }
 if(file_exists($imgPath) && is_file($imgPath)) {

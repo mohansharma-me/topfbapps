@@ -1,6 +1,12 @@
+
+body
+{
+	background: url('../imgs/gplaypattern.png');
+}
+
 .header-image {
-    height:300px;
-    background: url(../imgs/banner.jpg) 50% 50% no-repeat;
+    height:200px;
+    background: transparent;
     background-size: cover;
 }
 
@@ -13,10 +19,11 @@ main.page {
     position: relative;
     z-index:2;
     min-height: 200px;
+    width: 80%!important;
 }
 
 main.page .mobile-page {
-    margin-top: -150px;
+    margin-top: -50px;
 }
 
 main .head-row {

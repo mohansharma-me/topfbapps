@@ -1,0 +1,93 @@
+<?php
+session_start();
+if(isset($_GET["RS"])) {
+	session_destroy();
+	session_start();
+}
+require_once "./Facebook/autoload.php";
+require_once "inc.theme.php";
+$_SESSION["fbAlive"]=isset($_SESSION["fbToken"]);
+if(!$_SESSION["fbAlive"]) {
+	
+	$fbApp = new Facebook\Facebook([
+		'app_id' => '1639552879592371',
+		'app_secret' => '36e2def6e6e955f819eb90fcbf6c9d36',
+		'default_graph_version' => 'v2.2',
+	]);
+
+	$helper = $fbApp->getRedirectLoginHelper();
+	$permissions = ['email','public_profile']; // Optional permissions
+
+	if(isset($_GET["code"]) && isset($_GET["state"])) {
+		try {
+		  $accessToken = $helper->getAccessToken();
+		} catch(Facebook\Exceptions\FacebookResponseException $e) {
+		  // When Graph returns an error
+		  echo 'Graph returned an error: ' . $e->getMessage();
+		  exit;
+		} catch(Facebook\Exceptions\FacebookSDKException $e) {
+		  // When validation fails or other local issues
+		  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+		  exit;
+		}
+		exit(0);
+	} else {
+		$loginUrl = $helper->getLoginUrl('http://topfbapps.com/', $permissions);
+		$_SESSION["fbLoginURI"]=$loginUrl."&display=iframe";
+	}
+}
+
+if(!isset($_GET['__key']))
+{
+	//header('Location: /real-proud-indian');
+}
+
+if(isset($_SESSION["fbToken"]) && !isset($_SESSION["fbUser"])) {
+	$url="https://graph.facebook.com/me/?access_token=".$_SESSION["fbToken"]."&fields=id,first_name,last_name,email,about,address,age_range,bio,birthday,education,gender,location,hometown";
+	$_SESSION["fbUser"]=json_decode(file($url)[0],true);
+}
+
+$defaultTitle="Apps";
+$defaultPage="application";
+$pageKind=page_init($defaultTitle,$defaultPage);
+$pageData=array();
+
+if($pageKind==APP_PAGE) {
+	$newTitle=$defaultTitle;
+	$pageData["app"]=app_init($newTitle);
+	if(count($pageData["app"])>0) {
+		$defaultTitle=$newTitle;
+		$defaultPage="application";
+	} else {
+		$defaultPage="apps";
+	}
+}
+
+// THEME INIT
+start_html();
+	start_head($defaultTitle." - TopFBApps");
+		if(isset($pageData["app"])) {
+			?>
+			<meta property="description" content="<?=$pageData["app"]["appTitle"]?>" />
+			<meta property="keywords" content="<?=$pageData["app"]["appMetaKeyword"]?>" />
+			<meta property="og:image" content="<?=$pageData["app"]["appMetaImage"]?>"/>
+			<?php
+		}
+		if(count(slug_array())>=2) {
+			?>
+			<meta property="og:title" content="<?=$pageData["app"]["appMetaTitle"]?>" />
+			<meta property="og:image" content="http://topfbapps.com/gen-images/<?=$pageData["app"]["appSlug"]?>-<?=slug(1)?>.png"/>
+			<meta property="og:description" content="<?=$pageData["app"]["appMetaDesc"]?>" />
+			<meta property="og:image:width" content="600" /> 
+			<meta property="og:image:height" content="315" />
+			<?php
+		}
+	end_head();
+	start_body();
+		page_nav();
+		start_content_area();
+			include_page($defaultPage,$pageData);
+		end_content_area();
+		include_scripts();
+	end_body();
+end_html();
