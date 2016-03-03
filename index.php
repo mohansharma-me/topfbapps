@@ -24,8 +24,8 @@ if(!$_SESSION["fbAlive"]) {
 	$loginUrl = "";
 	try {
 		if(!isset($_SESSION["fbLoginURI"])) {
-			$_SESSION["fbLoginURI"]=$fbHelper->getLoginUrl('http://topfbapps.com/fb_callback.php', $permissions);
-			$_SESSION["fbLoginURI"].="&display=iframe";
+			$_SESSION["fbLoginUri"]=$fbHelper->getLoginUrl('http://topfbapps.com/fb_callback.php', $permissions);
+			$_SESSION["fbLoginUri"].="&display=iframe";
 		}
 	} catch( FacebookRequestException $e ) {
 		echo 'Graph returned an error: ' . $e->getMessage();
